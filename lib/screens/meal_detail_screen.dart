@@ -43,76 +43,85 @@ class MealDetailScreen extends StatelessWidget {
     final meal = ModalRoute.of(context)!.settings.arguments as Meal;
 
     return Scaffold(
-        appBar: AppBar(
-          title: Text(meal.title),
-          centerTitle: true,
-        ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(
-                height: 300,
-                width: double.infinity,
-                child: Image.network(
-                  meal.imageUrl,
-                  fit: BoxFit.cover,
-                ),
+      appBar: AppBar(
+        title: Text(meal.title),
+        centerTitle: true,
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(
+              height: 300,
+              width: double.infinity,
+              child: Image.network(
+                meal.imageUrl,
+                fit: BoxFit.cover,
               ),
-              _createSectionTitle(
-                context: context,
-                title: 'Ingredientes',
-              ),
-              _createSectionContainer(
-                meal: meal,
-                context: context,
-                child: ListView.builder(
-                  itemCount: meal.ingredients.length,
-                  itemBuilder: (ctx, index) {
-                    final ingredient = meal.ingredients[index];
-        
-                    return Card(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 5,
-                          horizontal: 10,
-                        ),
-                        child: Text(ingredient),
+            ),
+            _createSectionTitle(
+              context: context,
+              title: 'Ingredientes',
+            ),
+            _createSectionContainer(
+              meal: meal,
+              context: context,
+              child: ListView.builder(
+                itemCount: meal.ingredients.length,
+                itemBuilder: (ctx, index) {
+                  final ingredient = meal.ingredients[index];
+
+                  return Card(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 5,
+                        horizontal: 10,
                       ),
-                      color: Theme.of(context).colorScheme.secondary,
-                    );
-                  },
-                ),
+                      child: Text(ingredient),
+                    ),
+                    color: Theme.of(context).colorScheme.secondary,
+                  );
+                },
               ),
-              _createSectionTitle(
-                context: context,
-                title: 'Passos',
-              ),
-              _createSectionContainer(
-                meal: meal,
-                context: context,
-                child: ListView.builder(
-                  itemCount: meal.steps.length,
-                  itemBuilder: (ctx, index) {
-                    final step = meal.steps[index];
-        
-                    return Column(
-                      children: [
-                        ListTile(
-                          leading: CircleAvatar(
-                            child: Text('${index + 1}'),
-                            backgroundColor: Theme.of(context).colorScheme.primary,
-                            foregroundColor: Colors.white,
-                          ),
-                          title: Text(step),
+            ),
+            _createSectionTitle(
+              context: context,
+              title: 'Passos',
+            ),
+            _createSectionContainer(
+              meal: meal,
+              context: context,
+              child: ListView.builder(
+                itemCount: meal.steps.length,
+                itemBuilder: (ctx, index) {
+                  final step = meal.steps[index];
+
+                  return Column(
+                    children: [
+                      ListTile(
+                        leading: CircleAvatar(
+                          child: Text('${index + 1}'),
+                          backgroundColor:
+                              Theme.of(context).colorScheme.primary,
+                          foregroundColor: Colors.white,
                         ),
-                        const Divider(),
-                      ],
-                    );
-                  },
-                ),
-              )
-            ],
-          ),
-        ));
+                        title: Text(step),
+                      ),
+                      const Divider(),
+                    ],
+                  );
+                },
+              ),
+            )
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.star),
+        foregroundColor: Colors.black,
+        onPressed: () {
+          Navigator.of(context).pop(meal.title);
+        },
+      ),
+    );
   }
 }
